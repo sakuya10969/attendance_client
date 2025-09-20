@@ -46,7 +46,7 @@ const SignUpPage = () => {
         required
       />
       <Group justify="space-between" mt="md">
-        <Anchor component={Link} href="/login" size="sm">
+        <Anchor component={Link} href="/signIn" size="sm">
           サインインはこちら
         </Anchor>
         <Button onClick={handleSubmit}>登録</Button>
