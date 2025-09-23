@@ -9,21 +9,30 @@ import {
 } from '@mantine/core';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'
 
 import AuthFormLayout from '@/components/AuthFormLayout';
+import { signUp } from '@/api/authApi';
 
 const SignUpPage = () => {
-  const [email, setEmail] = useState<string>('');
   const [name, setName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const handleSubmit = () => {
-    // NestJSのAPIにPOSTする処理を書く
-    console.log({ name, email, password });
+  const router = useRouter();
+
+  const handleSubmit = async () => {
+    try {
+      await signUp(name, email, password)
+      router.push('/signIn')
+    }
+    catch (error) {
+      console.error(error)
+    }
   };
 
   return (
-    <AuthFormLayout title="新規登録">
+    <AuthFormLayout title="アカウント登録">
       <TextInput
         label="名前"
         placeholder="山田太郎"
