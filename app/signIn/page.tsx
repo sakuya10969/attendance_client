@@ -9,16 +9,20 @@ import {
 } from '@mantine/core';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 import AuthFormLayout from '@/components/AuthFormLayout';
+import { signIn } from '@/api/authApi';
 
 const SignInPage = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const handleSubmit = () => {
-    // NestJSのAPIにPOSTする処理を書く（axiosなどで）
-    console.log({ email, password });
+  const router = useRouter();
+
+  const handleSubmit = async () => {
+    await signIn(email, password);
+    router.push('/');
   };
 
   return (
