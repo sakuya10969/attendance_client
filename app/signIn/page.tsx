@@ -21,8 +21,13 @@ const SignInPage = () => {
   const router = useRouter();
 
   const handleSubmit = async () => {
+    try {
     await signIn(email, password);
     router.push('/');
+    }
+    catch (error) {
+      console.error(error)
+    }
   };
 
   return (
