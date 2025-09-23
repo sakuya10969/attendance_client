@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-class ApiClient {
+export class ApiClient {
   private client: AxiosInstance;
 
   constructor(baseURL?: string) {
@@ -74,7 +74,4 @@ class ApiClient {
 }
 
 // シングルトンインスタンスをエクスポート
-const apiClient = new ApiClient();
-
-export default apiClient;
-export { ApiClient };
+export const apiClient = new ApiClient();
