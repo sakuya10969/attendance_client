@@ -10,13 +10,14 @@ export class ApiClient {
       headers: {
         'Content-Type': 'application/json',
       },
+      withCredentials: true,
     });
 
     // リクエストインターセプター
     this.client.interceptors.request.use(
       (config) => {
-        // 認証トークンがあれば追加
-        const token = localStorage.getItem('authToken');
+        // クッキーから認証トークンを取得して追加
+        const token = this.getTokenFromCookie();
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
@@ -35,7 +36,7 @@ export class ApiClient {
       (error) => {
         // 401エラーの場合は認証トークンを削除
         if (error.response?.status === 401) {
-          localStorage.removeItem('authToken');
+          this.removeAuthToken();
         }
         return Promise.reject(error);
       }
@@ -62,14 +63,32 @@ export class ApiClient {
     return this.client.delete<T>(url, config);
   }
 
-  // 認証トークンを設定
-  setAuthToken(token: string): void {
-    localStorage.setItem('authToken', token);
+  // クッキーから認証トークンを取得
+  private getTokenFromCookie(): string | null {
+    if (typeof document === 'undefined') return null;
+    
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+      const [name, value] = cookie.trim().split('=');
+      if (name === 'authToken') {
+        return decodeURIComponent(value);
+      }
+    }
+    return null;
   }
 
-  // 認証トークンを削除
+  // 認証トークンをクッキーに設定
+  setAuthToken(token: string): void {
+    if (typeof document === 'undefined') return;
+    
+    document.cookie = `authToken=${encodeURIComponent(token)}; path=/; secure; samesite=strict`;
+  }
+
+  // 認証トークンをクッキーから削除
   removeAuthToken(): void {
-    localStorage.removeItem('authToken');
+    if (typeof document === 'undefined') return;
+    
+    document.cookie = 'authToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
   }
 }
 
