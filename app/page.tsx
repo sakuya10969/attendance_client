@@ -46,32 +46,32 @@ export default function DashboardPage() {
       </Title>
       <Text c="dimmed">{now}</Text>
 
-      <Card withBorder mt="lg" shadow="sm" radius="md" p="lg">
+      <Card withBorder mt="lg" shadow="sm" radius="md">
         <Grid mt="md" gutter="sm">
           <Grid.Col span={6}>
-            <Button color="green" fullWidth>
+            <Button fullWidth style={{ height: '150px', fontSize: '20px' }}>
               出勤する
             </Button>
           </Grid.Col>
           <Grid.Col span={6}>
-            <Button color="blue" fullWidth>
+            <Button fullWidth style={{ height: '150px', fontSize: '20px' }}>
               退勤する
             </Button>
           </Grid.Col>
           <Grid.Col span={6}>
-            <Button color="orange" fullWidth>
+            <Button variant="outline" fullWidth style={{ height: '150px', fontSize: '20px' }}>
               休憩する
             </Button>
           </Grid.Col>
           <Grid.Col span={6}>
-            <Button color="teal" fullWidth>
+            <Button variant="outline" fullWidth style={{ height: '150px', fontSize: '20px' }}>
               休憩終了
             </Button>
           </Grid.Col>
         </Grid>
       </Card>
 
-      <Button fullWidth mt="lg" variant="light" component="a" href="/records">
+      <Button fullWidth mt="lg" variant="light" component="a" href="/records" style={{ height: '100px', fontSize: '20px' }}>
         今月の勤怠を確認
       </Button>
     </Container>
